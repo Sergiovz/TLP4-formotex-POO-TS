@@ -19,9 +19,64 @@ El proyecto sigue una **Arquitectura por capas** con separación de responsabili
 
 - Node.js (versión 18 o superior)
 - npm o yarn
-- Base de datos (MySQL, PostgreSQL o MongoDB)
+- Base de datos MySQL
+- Docker y Docker Compose (para ejecución con contenedores)
 
 ## Instalación y Ejecución
+
+### Opción 1: Ejecución con Docker Compose (Recomendado)
+
+1. Clonar el repositorio:
+
+```bash
+git clone <url-del-repositorio>
+cd formotex-tlpiv-ts
+```
+
+2. Configurar variables de entorno:
+
+```bash
+# Copiar archivo de ejemplo
+cp .env.example .env
+
+# Editar .env con tus valores
+```
+
+3. Levantar los contenedores:
+
+```bash
+docker-compose up -d
+```
+
+Esto iniciará dos servicios:
+- **api**: Servidor Node.js en el puerto 3000
+- **db**: Base de datos MySQL en el puerto 3307 (externo)
+
+4. Verificar que los servicios están corriendo:
+
+```bash
+docker-compose ps
+```
+
+5. Ver logs de la aplicación:
+
+```bash
+docker-compose logs -f api
+```
+
+6. Detener los servicios:
+
+```bash
+docker-compose down
+```
+
+7. Detener y eliminar volúmenes (borrar datos de la base de datos):
+
+```bash
+docker-compose down -v
+```
+
+### Opción 2: Ejecución Local (sin Docker)
 
 1. Clonar el repositorio:
 
@@ -40,13 +95,16 @@ npm install
 
 ```bash
 # Crear archivo .env
+cp .env.example .env
+
+# Editar con tus valores locales
 DB_HOST=localhost
-DB_PORT=5432
+DB_PORT=3306
 DB_NAME=formotex
-DB_USER=postgres
+DB_USER=root
 DB_PASSWORD=tu_contraseña
 JWT_SECRET=tu_secreto_jwt
-JWT_EXPIRES_IN=1h
+JWT_EXPIRES_IN=24h
 PORT=3000
 ```
 
