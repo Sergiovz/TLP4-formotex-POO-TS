@@ -29,8 +29,8 @@ El proyecto sigue una **Arquitectura por capas** con separación de responsabili
 1. Clonar el repositorio:
 
 ```bash
-git clone <url-del-repositorio>
-cd formotex-tlpiv-ts
+git clone https://github.com/Sergiovz/TLP4-formotex-POO-TS
+cd TLP4-formotex-POO-TS
 ```
 
 2. Configurar variables de entorno:
