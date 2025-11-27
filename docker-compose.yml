@@ -15,7 +15,7 @@ services:
       - DB_NAME=${DB_NAME:-formotex}
       - DB_USER=${DB_USER:-root}
       - DB_PASSWORD=${DB_PASSWORD:-root}
-      - JWT_SECRET=${JWT_SECRET:-jwt_secret_key}
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
     depends_on:
       db:
