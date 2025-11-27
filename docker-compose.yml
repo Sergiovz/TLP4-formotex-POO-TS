@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME:-formotex}
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-root}
+      - JWT_SECRET=${JWT_SECRET:-jwt_secret_key}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - formotex-network
+    volumes:
+      - ./src:/app/src:ro
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-root}
+      - MYSQL_DATABASE=${DB_NAME:-formotex}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - formotex-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  formotex-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

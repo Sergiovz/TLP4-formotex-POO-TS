@@ -12,6 +12,8 @@ export class Database {
       database: env.db.config.database!,
       username: env.db.config.user!,
       password: env.db.config.password!,
+      host: env.db.config.host,
+      port: env.db.config.port,
       dialect: "mysql",
     });
   }
